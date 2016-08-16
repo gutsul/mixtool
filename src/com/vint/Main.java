@@ -31,6 +31,7 @@ public class Main {
 
         FFmpeg.mixSoundEffects(source, effects, timeline, output);
         Utils.deleteExistedFile(SILENT_FILE);
+        Log.i("File generated in " + output);
     }
 
     private static void init(String[] args) {
