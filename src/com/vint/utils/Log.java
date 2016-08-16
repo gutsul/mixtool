@@ -11,4 +11,8 @@ public class Log {
     public static void e(String msg){
         System.out.println("[ERROR] " + msg);
     }
+
+    public static void i(String msg){
+        System.out.println("[INFO] " + msg);
+    }
 }
