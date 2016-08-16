@@ -3,7 +3,6 @@ package com.vint.utils;
 import com.vint.model.Input;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by ygrigortsevich on 15.08.16.
@@ -15,9 +14,13 @@ public class ParcerArgs {
     public static final String SOUND_EFFECTS_VERBOSE_KEY = "--sound-efects";
     public static final String TIMELINE_KEY = "-t";
     public static final String TIMELINE_VERBOSE_KEY = "--timeline";
+    public static final String OUTPUT_PATH_KEY = "-out";
+    public static final String OUTPUT_PATH_VERBOSE_KEY = "--output";
+    public static final String DURATION_KEY = "-d";
+    public static final String DURATION_VERBOSE_KEY = "--duration";
 
     public static final String[] KEYS = new String[] {
-        SOURCE_PATH_KEY, SOUND_EFECTS_KEY, TIMELINE_KEY
+        SOURCE_PATH_KEY, SOUND_EFECTS_KEY, TIMELINE_KEY, OUTPUT_PATH_KEY, OUTPUT_PATH_VERBOSE_KEY, DURATION_KEY, DURATION_VERBOSE_KEY
     };
 
     public static Input parse(String[] args){
@@ -32,8 +35,18 @@ public class ParcerArgs {
                 inputBuilder.setSoundEffects(getValuesList(i,args));
             } else if (arg.equals(TIMELINE_KEY)){
                 inputBuilder.setTimeLine(getValuesList(i,args));
-            } else {
-//              TODO Add usage;
+            } else if (arg.equals(OUTPUT_PATH_KEY)){
+                String value = (i + 1 < max)?args[i + 1]: null;
+                inputBuilder.setOutputPath(value);
+            } else if (arg.equals(DURATION_KEY)){
+                String value = (i + 1 < max)?args[i + 1]: null;
+                try {
+                    int duration = Integer.parseInt(value);
+                    inputBuilder.setDuraion(duration);
+                }catch (Exception e){
+                    inputBuilder.setDuraion(0);
+                    Log.e("[-d] Value must contain only numbers. (seconds)");
+                }
             }
         }
         return inputBuilder.build();
