@@ -45,7 +45,7 @@ public class ParcerArgs {
                     inputBuilder.setDuraion(duration);
                 }catch (Exception e){
                     inputBuilder.setDuraion(0);
-                    Log.e("[-d] Value must contain only numbers. (seconds)");
+                    Log.e(Error.ERROR0);
                 }
             }
         }

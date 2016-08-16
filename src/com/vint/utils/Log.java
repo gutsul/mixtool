@@ -5,10 +5,10 @@ package com.vint.utils;
  */
 public class Log {
     public static void d(String msg){
-        System.out.println("[DEBUG]" + msg);
+        System.out.println("[DEBUG] " + msg);
     }
 
     public static void e(String msg){
-        System.out.println("[ERROR]" + msg);
+        System.out.println("[ERROR] " + msg);
     }
 }
