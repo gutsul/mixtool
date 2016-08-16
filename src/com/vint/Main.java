@@ -5,6 +5,7 @@ import com.vint.model.Input;
 import com.vint.utils.Error;
 import com.vint.utils.Log;
 import com.vint.utils.ParcerArgs;
+import com.vint.utils.Utils;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,9 +20,6 @@ public class Main {
     private static String output;
     private static String[] effects;
     private static String[] timeline;
-
-
-
 
     public static void main(String[] args) throws IOException, InterruptedException {
 // TEST
@@ -49,6 +47,7 @@ public class Main {
             output = System.getProperty("user.dir") + File.separator + fileName;
         }
         FFmpeg.mixSoundEffects(source, effects, timeline, output);
+        Utils.deleteExistedFile(SILENT_FILE);
     }
 
     private static void init(String[] args) {
