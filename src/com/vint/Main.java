@@ -53,7 +53,7 @@ public class Main {
                 source = SILENT_FILE;
             } else {
                 Log.e(Error.ERROR1);
-                return;
+                System.exit(0);
             }
         }
     }
@@ -61,7 +61,7 @@ public class Main {
     private static void checkEffects() {
         if (effects == null){
             Log.e(Error.MISSED_KEY + ParcerArgs.SOUND_EFECTS_KEY);
-            return;
+            System.exit(0);
         } else {
             for (String effect: effects){
                 checkFileExist(effect);
@@ -72,12 +72,10 @@ public class Main {
     private static void checkTimeLine() {
         if (timeline == null){
             Log.e(Error.MISSED_KEY + ParcerArgs.TIMELINE_KEY);
-            return;
-        } else {
-           if (timeline.length != effects.length){
+            System.exit(0);
+        } else if (timeline.length != effects.length){
                Log.e(Error.ERROR2);
-               return;
-           }
+               System.exit(0);
         }
     }
 
@@ -92,7 +90,7 @@ public class Main {
         File file = new File(filePath);
         if (!file.exists()){
             Log.e(Error.FILE_NOT_EXIST + filePath);
-            return;
+            System.exit(0);
         }
     }
 }
