@@ -24,18 +24,7 @@ public class Main {
     public static void main(String[] args) throws IOException, InterruptedException {
         init(args);
 
-        if (source != null){
-           checkFileExist(source);
-        } else {
-            if(duration > 0){
-                FFmpeg.createSilentAudio(duration, SILENT_FILE);
-                source = SILENT_FILE;
-            } else {
-                Log.e(Error.ERROR1);
-                return;
-            }
-        }
-
+        checkSource();
         checkEffects();
         checkTimeLine();
         checkOutput();
@@ -52,6 +41,20 @@ public class Main {
         output = input.getOutputPath();
         effects = input.getSoundEffects();
         timeline = input.getTimeline();
+    }
+
+    private static void checkSource() throws IOException, InterruptedException {
+        if (source != null){
+            checkFileExist(source);
+        } else {
+            if(duration > 0){
+                FFmpeg.createSilentAudio(duration, SILENT_FILE);
+                source = SILENT_FILE;
+            } else {
+                Log.e(Error.ERROR1);
+                return;
+            }
+        }
     }
 
     private static void checkEffects() {
