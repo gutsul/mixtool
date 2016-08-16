@@ -52,7 +52,8 @@ public class Main {
                 FFmpeg.createSilentAudio(duration, SILENT_FILE);
                 source = SILENT_FILE;
             } else {
-                Log.e(Error.ERROR1);
+                Log.e(Error.MISSED_KEY + ParcerArgs.SOURCE_PATH_KEY);
+//                Log.e(Error.ERROR1);
                 System.exit(0);
             }
         }
