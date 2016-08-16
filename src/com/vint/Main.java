@@ -25,11 +25,7 @@ public class Main {
         init(args);
 
         if (source != null){
-            File sourceFile = new File(source);
-            if (!sourceFile.exists()){
-                Log.e(Error.ERROR2 + ":" + source);
-                return;
-            }
+           checkFileExist(source);
         } else {
             if(duration > 0){
                 FFmpeg.createSilentAudio(duration, SILENT_FILE);
@@ -40,10 +36,10 @@ public class Main {
             }
         }
 
-        if (output == null){
-            String fileName = new File(source).getName();
-            output = System.getProperty("user.dir") + File.separator + fileName;
-        }
+        checkEffects();
+        checkTimeLine();
+        checkOutput();
+
         FFmpeg.mixSoundEffects(source, effects, timeline, output);
         Utils.deleteExistedFile(SILENT_FILE);
     }
@@ -56,5 +52,43 @@ public class Main {
         output = input.getOutputPath();
         effects = input.getSoundEffects();
         timeline = input.getTimeline();
+    }
+
+    private static void checkEffects() {
+        if (effects == null){
+            Log.e(Error.MISSED_KEY + ParcerArgs.SOUND_EFECTS_KEY);
+            return;
+        } else {
+            for (String effect: effects){
+                checkFileExist(effect);
+            }
+        }
+    }
+
+    private static void checkTimeLine() {
+        if (timeline == null){
+            Log.e(Error.MISSED_KEY + ParcerArgs.TIMELINE_KEY);
+            return;
+        } else {
+           if (timeline.length != effects.length){
+               Log.e(Error.ERROR2);
+               return;
+           }
+        }
+    }
+
+    private static void checkOutput() {
+        if (output == null){
+            String fileName = new File(source).getName();
+            output = System.getProperty("user.dir") + File.separator + fileName;
+        }
+    }
+
+    private static void checkFileExist(String filePath){
+        File file = new File(filePath);
+        if (!file.exists()){
+            Log.e(Error.FILE_NOT_EXIST + filePath);
+            return;
+        }
     }
 }
