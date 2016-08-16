@@ -23,7 +23,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException, InterruptedException {
 // TEST
-        args = new String[]{ParcerArgs.SOURCE_PATH_KEY, "/home/ygrigortsevich/Documents/SpilnaSprava/ffmpeg/test/output.wav", ParcerArgs.SOUND_EFECTS_KEY, "/home/ygrigortsevich/Documents/SpilnaSprava/ffmpeg/sound_efects/ahem_x.wav","/home/ygrigortsevich/Documents/SpilnaSprava/ffmpeg/sound_efects/alarm_beep.wav", ParcerArgs.TIMELINE_KEY, "0", "25000"};
+//        args = new String[]{ParcerArgs.SOURCE_PATH_KEY, "/home/ygrigortsevich/Documents/SpilnaSprava/ffmpeg/test/output.wav", ParcerArgs.SOUND_EFECTS_KEY, "/home/ygrigortsevich/Documents/SpilnaSprava/ffmpeg/sound_efects/ahem_x.wav","/home/ygrigortsevich/Documents/SpilnaSprava/ffmpeg/sound_efects/alarm_beep.wav", ParcerArgs.TIMELINE_KEY, "0", "25000"};
         init(args);
 
         if (source != null){
