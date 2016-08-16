@@ -1,10 +1,8 @@
 package com.vint.ffmpeg;
 
-import com.vint.utils.Log;
 import com.vint.utils.Utils;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 /**
  * Created by ygrigortsevich on 15.08.16.
@@ -41,8 +39,6 @@ public class FFmpeg {
         }
 
         String[] cmd = new String[]{"/bin/sh", "-c", "ffmpeg -i " + source + " " + effectList + "-filter_complex \"" + delaylist + "[0]"+streams+"amix=" + size + "\" " + outputName};
-
-        Log.d("ffmpeg: " + Arrays.toString(cmd));
 
         runLinuxCommand(cmd);
     }

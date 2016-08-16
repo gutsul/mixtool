@@ -10,7 +10,6 @@ public class Utils {
         File file = new File(outputName);
         if (file.exists()){
             file.delete();
-            Log.d("File " + outputName + " exist & deleted.");
         }
     }
 }
