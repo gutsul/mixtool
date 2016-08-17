@@ -30,15 +30,15 @@ public class Main {
 //            "-src",
 //            "/home/ygrigortsevich/Documents/SpilnaSprava/ffmpeg/test/test1.wav",
 //            "-se",
+//            "/home/ygrigortsevich/Documents/SpilnaSprava/ffmpeg/sound_efects/car_x.wav",
 //            "/home/ygrigortsevich/Documents/SpilnaSprava/ffmpeg/sound_efects/ahem_x.wav",
-//            "/home/ygrigortsevich/Documents/SpilnaSprava/ffmpeg/sound_efects/ahem_x.wav",
-//            "/home/ygrigortsevich/Documents/SpilnaSprava/ffmpeg/sound_efects/ahem_x.wav",
+//            "/home/ygrigortsevich/Documents/SpilnaSprava/ffmpeg/sound_efects/applause_y.wav",
 //            "-t",
 //            "0",
-//            "5000L",
+//            "0L",
 //            "18000",
 //            "-out",
-//            "/home/ygrigortsevich/Documents/SpilnaSprava/ffmpeg/output/test1-output.wav"
+//            "/home/ygrigortsevich/Documents/SpilnaSprava/ffmpeg/output/test1-loop.wav"
 //        };
         init(args);
 
@@ -50,11 +50,9 @@ public class Main {
         schedule = createSchedule();
 
         FFmpeg.mixSoundEffects(source, schedule, output);
-        Utils.deleteExistedFile(SILENT_FILE);
+        deleteTmpFiles();
         Log.i("File generated in " + output);
     }
-
-
 
     private static void init(String[] args) {
         Input input = ParcerArgs.parse(args);
@@ -132,6 +130,15 @@ public class Main {
             schedule.add(effect);
         }
         return schedule;
+    }
+
+    private static void deleteTmpFiles(){
+        Utils.deleteExistedFile(SILENT_FILE);
+        for(Effect effect: schedule){
+            if(effect.isLoop()){
+                Utils.deleteExistedFile(effect.getEffectPath());
+            }
+        }
     }
 
     private static void checkFileExist(String filePath){
