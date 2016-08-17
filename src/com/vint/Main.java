@@ -16,6 +16,7 @@ public class Main {
     private static String SILENT_FILE="silent.wav";
 
     private static int duration;
+    private static int sourceDuration;
     private static String source;
     private static String output;
     private static String[] effects;
@@ -28,6 +29,9 @@ public class Main {
         checkEffects();
         checkTimeLine();
         checkOutput();
+
+        sourceDuration = FFmpeg.getDuration("/home/ygrigortsevich/Documents/SpilnaSprava/ffmpeg/output/test1-output.wav");
+        Log.d("duration: "+ sourceDuration +"sec");
 
         FFmpeg.mixSoundEffects(source, effects, timeline, output);
         Utils.deleteExistedFile(SILENT_FILE);
