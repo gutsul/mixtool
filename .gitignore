@@ -61,3 +61,6 @@ fabric.properties
 mixtool.iml
 out/
 
+# Sound
+*.wav
+
