@@ -1,9 +1,10 @@
 package com.vint.ffmpeg;
 
-import com.vint.utils.Log;
+import com.vint.model.Effect;
 import com.vint.utils.Utils;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.UUID;
 
 /**
@@ -17,30 +18,29 @@ public class FFmpeg {
         runLinuxCommand(cmd);
     }
 
-    public static void mixSoundEffects(String source, String[]effects, String[]timeLine, String outputName) throws IOException, InterruptedException {
+    public static void mixSoundEffects(String source, ArrayList<Effect> shedule, String outputName) throws IOException, InterruptedException {
         Utils.deleteExistedFile(outputName);
+        int size = shedule.size() + 1;
+        int sourceDuration = getDuration(source);
 
-        int size = effects.length + 1;
-        String effectList = "";
-        for (String effect: effects){
-            effectList += "-i " + effect + " ";
-        }
-
-        String delaylist = "";
-        String streams = "";
-        int[] time = new int[timeLine.length];
-        for (int i = 0; i < timeLine.length; i++){
-            if (timeLine[i].equals("0")){
-                time[i] = 1;
-            } else {
-                time[i] = Integer.parseInt(timeLine[i]);
+        String effectList ="";
+        String delaylist ="";
+        String streams ="";
+        int i = 1;
+        for(Effect effect: shedule){
+            if(effect.isLoop()){
+                int effectDuration = getDuration(effect.getEffectPath());
+                int loops = ((sourceDuration - (effect.getTimeStart()/1000))/ effectDuration) + 1;
+                effect.setEffectPath(loop(loops, effect.getEffectPath()));
             }
-            String stream = "[stream"+ (i + 1) +"]";
-            delaylist += "["+ (i + 1) +"]adelay="+time[i]+"|"+ time[i] + stream + "; ";
+            effectList += "-i " + effect.getEffectPath() + " ";
+            String stream = "[stream"+ i +"]";
+            delaylist += "["+ i +"]adelay="+ effect.getTimeStart() +"|"+ effect.getTimeStart() + stream + "; ";
             streams +=stream;
+            i++;
         }
 
-        String[] cmd = new String[]{"/bin/sh", "-c", "ffmpeg -i " + source + " " + effectList + "-filter_complex \"" + delaylist + "[0]"+streams+"amix=" + size + "\" " + outputName};
+        String[] cmd = new String[]{"/bin/sh", "-c", "ffmpeg -i " + source + " " + effectList + "-filter_complex \"" + delaylist + "[0]"+streams+"amix=" + size + ":duration=first\" " + outputName};
 
         runLinuxCommand(cmd);
     }

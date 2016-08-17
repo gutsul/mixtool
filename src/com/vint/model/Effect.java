@@ -5,7 +5,8 @@ package com.vint.model;
  */
 public class Effect {
     private String effectPath;
-    private int time;
+    private int timeStart;
+    private boolean isLoop = false;
 
     public String getEffectPath() {
         return effectPath;
@@ -15,11 +16,19 @@ public class Effect {
         this.effectPath = effectPath;
     }
 
-    public int getTime() {
-        return time;
+    public int getTimeStart() {
+        return timeStart;
     }
 
-    public void setTime(int time) {
-        this.time = time;
+    public void setTimeStart(int timeStart) {
+        this.timeStart = timeStart == 0 ? 1 : timeStart;
+    }
+
+    public boolean isLoop() {
+        return isLoop;
+    }
+
+    public void setLoop(boolean loop) {
+        isLoop = loop;
     }
 }

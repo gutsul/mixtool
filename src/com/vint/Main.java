@@ -1,6 +1,7 @@
 package com.vint;
 
 import com.vint.ffmpeg.FFmpeg;
+import com.vint.model.Effect;
 import com.vint.model.Input;
 import com.vint.utils.Error;
 import com.vint.utils.Log;
@@ -9,6 +10,7 @@ import com.vint.utils.Utils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 public class Main {
@@ -21,8 +23,23 @@ public class Main {
     private static String output;
     private static String[] effects;
     private static String[] timeline;
+    private static ArrayList<Effect> schedule;
 
     public static void main(String[] args) throws IOException, InterruptedException {
+//        args = new String[]{
+//            "-src",
+//            "/home/ygrigortsevich/Documents/SpilnaSprava/ffmpeg/test/test1.wav",
+//            "-se",
+//            "/home/ygrigortsevich/Documents/SpilnaSprava/ffmpeg/sound_efects/ahem_x.wav",
+//            "/home/ygrigortsevich/Documents/SpilnaSprava/ffmpeg/sound_efects/ahem_x.wav",
+//            "/home/ygrigortsevich/Documents/SpilnaSprava/ffmpeg/sound_efects/ahem_x.wav",
+//            "-t",
+//            "0",
+//            "5000L",
+//            "18000",
+//            "-out",
+//            "/home/ygrigortsevich/Documents/SpilnaSprava/ffmpeg/output/test1-output.wav"
+//        };
         init(args);
 
         checkSource();
@@ -30,13 +47,14 @@ public class Main {
         checkTimeLine();
         checkOutput();
 
-        sourceDuration = FFmpeg.getDuration("/home/ygrigortsevich/Documents/SpilnaSprava/ffmpeg/output/test1-output.wav");
-        Log.d("duration: "+ sourceDuration +"sec");
+        schedule = createSchedule();
 
-        FFmpeg.mixSoundEffects(source, effects, timeline, output);
+        FFmpeg.mixSoundEffects(source, schedule, output);
         Utils.deleteExistedFile(SILENT_FILE);
         Log.i("File generated in " + output);
     }
+
+
 
     private static void init(String[] args) {
         Input input = ParcerArgs.parse(args);
@@ -89,6 +107,31 @@ public class Main {
             String fileName = new File(source).getName();
             output = System.getProperty("user.dir") + File.separator + fileName;
         }
+    }
+
+    private static ArrayList<Effect> createSchedule() {
+        ArrayList<Effect> schedule = new ArrayList<>();
+        for (int i = 0; i < timeline.length; i++){
+            Effect effect = new Effect();
+            if(timeline[i].contains("L")){
+                effect.setLoop(true);
+                String replaced = timeline[i].replace("L","");
+                timeline[i] = replaced;
+            } else {
+                effect.setLoop(false);
+            }
+            int timeStart;
+            try {
+                timeStart = Integer.parseInt(timeline[i]);
+                effect.setTimeStart(timeStart);
+            } catch (Exception e) {
+                Log.e(Error.BAD_TIME_FORMAT + timeline[i]);
+                System.exit(0);
+            }
+            effect.setEffectPath(effects[i]);
+            schedule.add(effect);
+        }
+        return schedule;
     }
 
     private static void checkFileExist(String filePath){
