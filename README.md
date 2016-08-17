@@ -29,11 +29,11 @@ java -jar mixtool.jar -src /home/user/source.wav \
 -t 0 5000L 18000 \
 -out /home/ygrigortsevich/Documents/SpilnaSprava/ffmpeg/output/filename.wav
 ```
-*What command do:*__
-1. Source file is */home/user/source.wav*__
-2. Uses three */sound_efects/ahem_x.wav* effect.__
-3. Effects applies to 0, 5, 18 seconds. On the fifth second effect repeats.__
-4. Mixed file saved in */home/ygrigortsevich/Documents/SpilnaSprava/ffmpeg/output/filename.wav*__
+*What command do:* <br>
+1. Source file is */home/user/source.wav*<br>
+2. Uses three */sound_efects/ahem_x.wav* effect.<br>
+3. Effects applies to 0, 5, 18 seconds. On the fifth second effect repeats.<br>
+4. Mixed file saved in */home/ygrigortsevich/Documents/SpilnaSprava/ffmpeg/output/filename.wav*<br>
 
 ##### Mix 3 sound effects with silent file.
 ```
@@ -44,8 +44,8 @@ java -jar mixtool.jar -d 60 \
 -t 0 5000L 18000 \
 -out /home/ygrigortsevich/Documents/SpilnaSprava/ffmpeg/output/filename.wav
 ```
-*What command do:*__
-1. Create silent file with duration of 60 seconds __
-2. Uses three */sound_efects/ahem_x.wav* effect. __
-3. Effects applies to 0, 5, 18 seconds. On the fifth second effect repeats. __
-4. Mixed file saved in */home/ygrigortsevich/Documents/SpilnaSprava/ffmpeg/output/filename.wav*__
+*What command do:*<br>
+1. Create silent file with duration of 60 seconds <br>
+2. Uses three */sound_efects/ahem_x.wav* effect. <br>
+3. Effects applies to 0, 5, 18 seconds. On the fifth second effect repeats. <br>
+4. Mixed file saved in */home/ygrigortsevich/Documents/SpilnaSprava/ffmpeg/output/filename.wav*<br>
