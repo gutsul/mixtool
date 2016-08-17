@@ -18,7 +18,6 @@ public class Main {
     private static String SILENT_FILE="silent.wav";
 
     private static int duration;
-    private static int sourceDuration;
     private static String source;
     private static String output;
     private static String[] effects;
