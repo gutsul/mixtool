@@ -19,7 +19,6 @@ public class FFmpeg {
     }
 
     public static void mixSoundEffects(String source, ArrayList<Effect> shedule, String outputName) throws IOException, InterruptedException {
-        Utils.deleteExistedFile(outputName);
         int size = shedule.size() + 1;
         int sourceDuration = getDuration(source);
 
@@ -40,7 +39,7 @@ public class FFmpeg {
             i++;
         }
 
-        String[] cmd = new String[]{"/bin/sh", "-c", "ffmpeg -i " + source + " " + effectList + "-filter_complex \"" + delaylist + "[0]"+streams+"amix=" + size + ":duration=first\" " + outputName};
+        String[] cmd = new String[]{"/bin/sh", "-c", "ffmpeg -y -i " + source + " " + effectList + "-filter_complex \"" + delaylist + "[0]"+streams+"amix=" + size + ":duration=first\" " + outputName};
 
         runLinuxCommand(cmd);
     }
