@@ -13,8 +13,7 @@ import java.util.UUID;
 public class FFmpeg {
 
     public static void createSilentAudio(int duration, String outputName) throws IOException, InterruptedException {
-        Utils.deleteExistedFile(outputName);
-        String[] cmd = new String[]{"/bin/sh", "-c", "ffmpeg -f lavfi -i \"aevalsrc=0|0:d=" + duration + "\" "+ outputName };
+        String[] cmd = new String[]{"/bin/sh", "-c", "ffmpeg -y -f lavfi -i \"aevalsrc=0|0:d=" + duration + "\" "+ outputName };
         runLinuxCommand(cmd);
     }
 
