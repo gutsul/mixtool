@@ -74,8 +74,22 @@ public class FFmpeg {
         return output;
     }
 
-    public static void mergeVideoAndSound(String pathToVideo, String pathToSound, String outputName) throws IOException, InterruptedException {
-        String[] cmd = new String[]{"/bin/sh", "-c", "ffmpeg -y -i "+ pathToVideo +" -i "+ pathToSound +" -c:v copy -c:a aac -strict experimental -b:a 192k -shortest "+ outputName };
+    public static void mergeVideoAndAudio(String pathToVideo, String pathToAudio, String outputName) throws IOException, InterruptedException {
+        String[] cmd = new String[]{"/bin/sh", "-c", "ffmpeg -y -i "+ pathToVideo +" -i "+ pathToAudio+" -c:v copy -c:a aac -strict experimental -b:a 192k -shortest "+ outputName };
+        runLinuxCommand(cmd);
+    }
+
+    public static void createVideoFromImagesCBR(String fileMask, int framerate, String constantBitrate, String outputName) throws IOException, InterruptedException {
+      createVideoFromImagesVBR(fileMask, framerate, constantBitrate, constantBitrate, outputName);
+    }
+
+    public static void createVideoFromImagesVBR(String fileMask, int framerate, String minBitrate, String maxBitrate, String outputName) throws IOException, InterruptedException {
+        String[] cmd = new String[]{"/bin/sh", "-c", "ffmpeg -y -framerate "+ framerate +" -i "+ fileMask +" -c:v libx264 -minrate "+ minBitrate +" -maxrate "+ maxBitrate +" -pix_fmt yuv420p "+ outputName };
+        runLinuxCommand(cmd);
+    }
+
+    public static void createVideoFromImagesABR(String fileMask, int framerate, String avarageBitrate, String outputName) throws IOException, InterruptedException {
+        String[] cmd = new String[]{"/bin/sh", "-c", "ffmpeg -y -framerate "+ framerate +" -i "+ fileMask +" -c:v libx264 -b:v "+ avarageBitrate +" -pix_fmt yuv420p "+ outputName };
         runLinuxCommand(cmd);
     }
 
