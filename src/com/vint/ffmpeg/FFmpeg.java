@@ -74,6 +74,11 @@ public class FFmpeg {
         return output;
     }
 
+    public static void mergeVideoAndSound(String pathToVideo, String pathToSound, String outputName) throws IOException, InterruptedException {
+        String[] cmd = new String[]{"/bin/sh", "-c", "ffmpeg -y -i "+ pathToVideo +" -i "+ pathToSound +" -c:v copy -c:a aac -strict experimental -b:a 192k -shortest "+ outputName };
+        runLinuxCommand(cmd);
+    }
+
     private static void runLinuxCommand(String[] cmd) throws IOException, InterruptedException {
         Runtime run = Runtime.getRuntime();
         Process pr = run.exec(cmd);
