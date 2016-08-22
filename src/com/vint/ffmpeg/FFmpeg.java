@@ -45,7 +45,6 @@ public class FFmpeg {
         runLinuxCommand(cmd);
     }
 
-    // TODO Refactor this code
     public static int getDuration(String filePath) throws IOException, InterruptedException {
         String[] cmd = new String[]{"/bin/sh", "-c", "ffprobe -i "+ filePath +" -show_entries format=duration -v quiet -of csv=\"p=0\""};
         Runtime run = Runtime.getRuntime();
@@ -53,7 +52,6 @@ public class FFmpeg {
         pr.waitFor();
 
         BufferedReader stdInput = new BufferedReader(new InputStreamReader(pr.getInputStream()));
-//        TODO: можлива посмилка
         int duration = (int) Float.parseFloat(stdInput.readLine());
         return duration;
     }
