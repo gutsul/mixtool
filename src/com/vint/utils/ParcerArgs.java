@@ -8,10 +8,10 @@ import java.util.ArrayList;
  * Created by ygrigortsevich on 15.08.16.
  */
 public class ParcerArgs {
-    public static final String SOURCE_PATH_KEY = "-src";
-    public static final String SOURCE_PATH_VERBOSE_KEY = "--source";
+    public static final String SOURCE_PATH_KEY = "-asrc";
+    public static final String SOURCE_PATH_VERBOSE_KEY = "--audio-source";
     public static final String SOUND_EFECTS_KEY = "-se";
-    public static final String SOUND_EFFECTS_VERBOSE_KEY = "--sound-efects";
+    public static final String SOUND_EFFECTS_VERBOSE_KEY = "--sound-effects";
     public static final String TIMELINE_KEY = "-t";
     public static final String TIMELINE_VERBOSE_KEY = "--timeline";
     public static final String OUTPUT_PATH_KEY = "-out";

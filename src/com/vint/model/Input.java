@@ -30,6 +30,8 @@ public class Input {
     private boolean KEY_VIDEO_CODEC = false;
     private boolean KEY_FPS = false;
 
+//    TODO: Refactor this
+
     public int getDuration() {
         return duration;
     }
