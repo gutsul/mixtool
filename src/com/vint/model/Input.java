@@ -169,8 +169,8 @@ public class Input {
             return this;
         }
 
-        public Builder setAvarageBitrate(String avarageBitrate) {
-            Input.this.averageBitrate = avarageBitrate;
+        public Builder setAverageBitrate(String averageBitrate) {
+            Input.this.averageBitrate = averageBitrate;
             return this;
         }
 
@@ -198,7 +198,6 @@ public class Input {
             Input.this.fps = fps;
             return this;
         }
-
 
         public Builder setKey(String key) {
             if(key.equals(AUDIO_SOURCE_PATH_KEY)){

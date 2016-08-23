@@ -76,24 +76,39 @@ public class ParcerArgs {
                     int duration = Integer.parseInt(value);
                     inputBuilder.setDuraion(duration);
                 }catch (Exception e){
-                    inputBuilder.setDuraion(0);
-                    Log.e(Error.ERROR0);
+                    Log.e(Error.ONLY_NUMBERS + value);
+                    System.exit(0);
                 }
             } else if(arg.equals(FRAME_MASK_KEY)){
                 inputBuilder.setKey(FRAME_MASK_KEY);
+                String value = (i + 1 < max)?args[i + 1]: null;
+                inputBuilder.setFrameMask(value);
             } else if(arg.equals(ABR_KEY)){
                 inputBuilder.setKey(ABR_KEY);
+                String value = (i + 1 < max)?args[i + 1]: null;
+                inputBuilder.setAverageBitrate(value);
             } else if(arg.equals(VBR_KEY)){
                 inputBuilder.setKey(VBR_KEY);
+//                TODO: Add VBR
             } else if(arg.equals(CBR_KEY)){
                 inputBuilder.setKey(CBR_KEY);
+                String value = (i + 1 < max)?args[i + 1]: null;
+                inputBuilder.setConstantBitrate(value);
             } else if(arg.equals(VIDEO_CODEC_KEY)){
+//                TODO: Add default video codec
                 inputBuilder.setKey(VIDEO_CODEC_KEY);
                 String value = (i + 1 < max)?args[i + 1]: null;
                 inputBuilder.setVideoCodec(value);
             } else if(arg.equals(FPS_KEY)){
                 inputBuilder.setKey(FPS_KEY);
-
+                String value = (i + 1 < max)?args[i + 1]: null;
+                try {
+                    int fps = Integer.parseInt(value);
+                    inputBuilder.setFps(fps);
+                }catch (Exception e){
+                    Log.e(Error.ONLY_NUMBERS + value);
+                    System.exit(0);
+                }
             }
         }
         return inputBuilder.build();

@@ -30,7 +30,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException, InterruptedException {
 //        args = new String[]{
-//            "-src",
+//            "-asrc",
 //            "/home/ygrigortsevich/Documents/SpilnaSprava/ffmpeg/test/test1.wav",
 //            "-se",
 //            "/home/ygrigortsevich/Documents/SpilnaSprava/ffmpeg/sound_efects/car_x.wav",
@@ -41,22 +41,31 @@ public class Main {
 //            "0L",
 //            "18000",
 //            "-out",
-//            "/home/ygrigortsevich/Documents/SpilnaSprava/ffmpeg/output/test1-loop.wav"
+//            "/home/ygrigortsevich/Documents/SpilnaSprava/ffmpeg/output/test1-loop.wav",
+//            "-fm"
 //        };
         init(args);
 
         int type = determineType();
 
-        checkSource();
-        checkEffects();
-        checkTimeLine();
-        checkOutput();
+        if(type == AUDIO_ONLY){
+            Log.d("AUDIO ONLY");
 
-        schedule = createSchedule();
+            checkAudioSource();
+            checkEffects();
+            checkTimeLine();
+            checkOutput();
 
-        FFmpeg.mixSoundEffects(source, schedule, output);
-        deleteTmpFiles();
-        Log.i("File generated in " + output);
+            schedule = createSchedule();
+
+            FFmpeg.mixSoundEffects(source, schedule, output);
+            deleteTmpFiles();
+            Log.i("File generated in " + output);
+        } else if(type == VIDEO_ONLY){
+            Log.d("VIDEO ONLY");
+        } else if (type == VIDEO_WITH_AUDIO){
+            Log.d("VIDEO & AUDIO");
+        }
     }
 
     private static void init(String[] args) {
@@ -71,13 +80,35 @@ public class Main {
 
     private static int determineType() {
         int type = AUDIO_ONLY;
-        if (input.isKEY_DURATION() || input.isKEY_AUDIO_SOURCE_PATH() || input.isKEY_SOUND_EFFECTS() || input.isKEY_TIMELINE() ){
+
+        if((input.isKEY_DURATION() ||
+                input.isKEY_AUDIO_SOURCE_PATH() ||
+                input.isKEY_SOUND_EFFECTS() ||
+                input.isKEY_TIMELINE()) &&
+                (input.isKEY_FRAME_MASK() ||
+                 input.isKEY_ABR() ||
+                 input.isKEY_VBR() ||
+                 input.isKEY_CBR() ||
+                 input.isKEY_VIDEO_CODEC() ||
+                 input.isKEY_FPS())){
+            type = VIDEO_WITH_AUDIO;
+        } else if(input.isKEY_DURATION() ||
+                input.isKEY_AUDIO_SOURCE_PATH() ||
+                input.isKEY_SOUND_EFFECTS() ||
+                input.isKEY_TIMELINE()){
             type = AUDIO_ONLY;
+        } else if(input.isKEY_FRAME_MASK() ||
+                input.isKEY_ABR() ||
+                input.isKEY_VBR() ||
+                input.isKEY_CBR() ||
+                input.isKEY_VIDEO_CODEC() ||
+                input.isKEY_FPS()){
+            type = VIDEO_ONLY;
         }
         return type;
     }
 
-    private static void checkSource() throws IOException, InterruptedException {
+    private static void checkAudioSource() throws IOException, InterruptedException {
         if (source != null){
             checkFileExist(source);
         } else {
