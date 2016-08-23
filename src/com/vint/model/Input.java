@@ -13,7 +13,7 @@ public class Input {
     private String[] timeline;
 
     private String frameMask;
-    private String avarageBitrate;
+    private String averageBitrate;
     private String minBitrate;
     private String maxBitrate;
     private String constantBitrate;
@@ -31,8 +31,6 @@ public class Input {
     private boolean KEY_CBR = false;
     private boolean KEY_VIDEO_CODEC = false;
     private boolean KEY_FPS = false;
-
-//    TODO: Refactor this
 
     public int getDuration() {
         return duration;
@@ -58,8 +56,8 @@ public class Input {
         return frameMask;
     }
 
-    public String getAvarageBitrate() {
-        return avarageBitrate;
+    public String getAverageBitrate() {
+        return averageBitrate;
     }
 
     public String getMinBitrate() {
@@ -172,7 +170,7 @@ public class Input {
         }
 
         public Builder setAvarageBitrate(String avarageBitrate) {
-            Input.this.avarageBitrate = avarageBitrate;
+            Input.this.averageBitrate = avarageBitrate;
             return this;
         }
 
