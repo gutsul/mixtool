@@ -63,7 +63,7 @@ public class Main {
         input = ParcerArgs.parse(args);
 
         duration = input.getDuration();
-        source = input.getSourcePath();
+        source = input.getAudioSourcePath();
         output = input.getOutputPath();
         effects = input.getSoundEffects();
         timeline = input.getTimeline();
@@ -71,7 +71,7 @@ public class Main {
 
     private static int determineType() {
         int type = AUDIO_ONLY;
-        if (input.isKEY_DURATION() || input.isKEY_SOURCE_PATH() || input.isKEY_SOUND_EFFECTS() || input.isKEY_TIMELINE() ){
+        if (input.isKEY_DURATION() || input.isKEY_AUDIO_SOURCE_PATH() || input.isKEY_SOUND_EFFECTS() || input.isKEY_TIMELINE() ){
             type = AUDIO_ONLY;
         }
         return type;
@@ -85,7 +85,7 @@ public class Main {
                 FFmpeg.createSilentAudio(duration, SILENT_FILE);
                 source = SILENT_FILE;
             } else {
-                Log.e(Error.MISSED_KEY + ParcerArgs.SOURCE_PATH_KEY);
+                Log.e(Error.MISSED_KEY + ParcerArgs.AUDIO_SOURCE_PATH_KEY);
 //                Log.e(Error.ERROR1);
                 System.exit(0);
             }
