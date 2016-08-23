@@ -16,7 +16,11 @@ import java.util.ArrayList;
 public class Main {
 
     private static String SILENT_FILE="silent.wav";
+    private static final int AUDIO_ONLY = 0;
+    private static final int VIDEO_ONLY = 1;
+    private static final int VIDEO_WITH_AUDIO = 2;
 
+    private static Input input;
     private static int duration;
     private static String source;
     private static String output;
@@ -41,6 +45,8 @@ public class Main {
 //        };
         init(args);
 
+        int type = determineType();
+
         checkSource();
         checkEffects();
         checkTimeLine();
@@ -54,13 +60,21 @@ public class Main {
     }
 
     private static void init(String[] args) {
-        Input input = ParcerArgs.parse(args);
+        input = ParcerArgs.parse(args);
 
         duration = input.getDuration();
         source = input.getSourcePath();
         output = input.getOutputPath();
         effects = input.getSoundEffects();
         timeline = input.getTimeline();
+    }
+
+    private static int determineType() {
+        int type = AUDIO_ONLY;
+        if (input.isKEY_DURATION() || input.isKEY_SOURCE_PATH() || input.isKEY_SOUND_EFFECTS() || input.isKEY_TIMELINE() ){
+            type = AUDIO_ONLY;
+        }
+        return type;
     }
 
     private static void checkSource() throws IOException, InterruptedException {

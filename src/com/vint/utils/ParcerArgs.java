@@ -29,16 +29,21 @@ public class ParcerArgs {
         for (int i = 0; i < max; i++) {
             String arg = args[i];
             if (arg.equals(SOURCE_PATH_KEY)){
+                inputBuilder.setKeySourcePath(true);
                 String value = (i + 1 < max)?args[i + 1]: null;
                 inputBuilder.setSourcePath(value);
             } else if (arg.equals(SOUND_EFECTS_KEY)) {
+                inputBuilder.setKeySoundEffects(true);
                 inputBuilder.setSoundEffects(getValuesList(i,args));
             } else if (arg.equals(TIMELINE_KEY)){
+                inputBuilder.setKeyTimeline(true);
                 inputBuilder.setTimeLine(getValuesList(i,args));
             } else if (arg.equals(OUTPUT_PATH_KEY)){
+                inputBuilder.setKeyOutputPath(true);
                 String value = (i + 1 < max)?args[i + 1]: null;
                 inputBuilder.setOutputPath(value);
             } else if (arg.equals(DURATION_KEY)){
+                inputBuilder.setKeyDuration(true);
                 String value = (i + 1 < max)?args[i + 1]: null;
                 try {
                     int duration = Integer.parseInt(value);
