@@ -58,6 +58,9 @@ public class ParcerArgs {
             if(arg.equals(AUDIO_SOURCE_PATH_KEY)){
                 inputBuilder.setKey(AUDIO_SOURCE_PATH_KEY);
                 String value = (i + 1 < max)?args[i + 1]: null;
+                if(isKey(value)){
+                    value = null;
+                }
                 inputBuilder.setSourcePath(value);
             } else if(arg.equals(SOUND_EFECTS_KEY)) {
                 inputBuilder.setKey(SOUND_EFECTS_KEY);
@@ -68,6 +71,9 @@ public class ParcerArgs {
             } else if(arg.equals(OUTPUT_PATH_KEY)){
                 inputBuilder.setKey(OUTPUT_PATH_KEY);
                 String value = (i + 1 < max)?args[i + 1]: null;
+                if(isKey(value)){
+                    value = null;
+                }
                 inputBuilder.setOutputPath(value);
             } else if(arg.equals(DURATION_KEY)){
                 inputBuilder.setKey(DURATION_KEY);
@@ -82,10 +88,16 @@ public class ParcerArgs {
             } else if(arg.equals(FRAME_MASK_KEY)){
                 inputBuilder.setKey(FRAME_MASK_KEY);
                 String value = (i + 1 < max)?args[i + 1]: null;
+                if(isKey(value)){
+                    value = null;
+                }
                 inputBuilder.setFrameMask(value);
             } else if(arg.equals(ABR_KEY)){
                 inputBuilder.setKey(ABR_KEY);
                 String value = (i + 1 < max)?args[i + 1]: null;
+                if(isKey(value)){
+                    value = null;
+                }
                 inputBuilder.setAverageBitrate(value);
             } else if(arg.equals(VBR_KEY)){
                 inputBuilder.setKey(VBR_KEY);
@@ -93,11 +105,17 @@ public class ParcerArgs {
             } else if(arg.equals(CBR_KEY)){
                 inputBuilder.setKey(CBR_KEY);
                 String value = (i + 1 < max)?args[i + 1]: null;
+                if(isKey(value)){
+                    value = null;
+                }
                 inputBuilder.setConstantBitrate(value);
             } else if(arg.equals(VIDEO_CODEC_KEY)){
 //                TODO: Add default video codec
                 inputBuilder.setKey(VIDEO_CODEC_KEY);
                 String value = (i + 1 < max)?args[i + 1]: null;
+                if(isKey(value)){
+                    value = null;
+                }
                 inputBuilder.setVideoCodec(value);
             } else if(arg.equals(FPS_KEY)){
                 inputBuilder.setKey(FPS_KEY);
