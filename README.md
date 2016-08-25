@@ -7,13 +7,18 @@
 
 ### 1. Documentation
 
-Key       | Description                                | Value 
-----------|--------------------------------------------|-------
- `-asrc`  | *Audio source*. The absolute file path to which you want to apply effects.| /path/to/source/file.wav 
- `-d`     | *Duration*. Create silent file with duration of N seconds.     |   60 
- `-se`    | *Sound effect*. The absolute file paths to sound effects you want to apply.     |    /sound_efects/ahem_x.wav <br>/sound_efects/bee.wav 
- `-t`     | *Time line*. Time in milliseconds when to apply the effect. If adding tag 'L' effect will be loops.    |    1000 or 1000L 
- `-out`   | *Output*. The absolute file path where you want to save mixed file.     |    /path/to/output/file.wav 
+Mixtool може працювати в трьох режимах: <br>
+ - ONLY AUDIO <br>
+ - ONLY VIDEO <br>
+ - VIDEO&AUDIO <br>
+
+|Key       | Description                                                                 | Value            |
+|:-------- |-----------------------------------------------------------------------------|------------------|
+| `-asrc`  | *Audio source*. The absolute file path to which you want to apply effects.  | /path/to/source/file.wav 
+| `-d`     | *Duration*. Create silent file with duration of N seconds.                  |   60 
+| `-se`    | *Sound effect*. The absolute file paths to sound effects you want to apply. |    /sound_efects/ahem_x.wav <br>/sound_efects/bee.wav 
+| `-t`     | *Time line*. Time in milliseconds when to apply the effect. If adding tag 'L' effect will be loops.    |    1000 or 1000L 
+| `-out`   | *Output*. The absolute file path where you want to save mixed file.     |    /path/to/output/file.wav 
 
 **Impotant:** <br>
 1. You can choose only `-asrc` or `-d` key. <br>
