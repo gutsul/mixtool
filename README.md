@@ -30,7 +30,7 @@
 
 |Key       | Description                                                              | Value            |
 |:-------- |--------------------------------------------------------------------------|------------------|
-| `-fm`    | *Audio source*.                                                          | /path/to/source/file.wav 
+| `-fm`    | *Frame mask*.       | /path/to/source/file.wav 
 | `-CBR`   | *Constant bitrate*. |   2000k 
 | `-ABR`   | *Average bitrate*.  |   200k 
 | `-VBR`   | *Variable bitrate*. |   100k 300k 
