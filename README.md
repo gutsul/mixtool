@@ -7,7 +7,7 @@
 
 ### 1. Documentation
 
-|      Key | Description                                | Value |
+|Key       | Description                                | Value |
 |----------|--------------------------------------------|-------|
 | `-asrc`  | *Audio source*. The absolute file path to which you want to apply effects.| /path/to/source/file.wav |
 | `-d`     | *Duration*. Create silent file with duration of N seconds.     |   60 |
@@ -15,14 +15,14 @@
 | `-t`     | *Time line*. Time in milliseconds when to apply the effect. If adding tag 'L' effect will be loops.    |    1000 or 1000L |
 | `-out`   | *Output*. The absolute file path where you want to save mixed file.     |    /path/to/output/file.wav |
 
-**Impotant:** 
-1. You can choose only `-src` or `-d` key. 
-2. Number of effects and time stamps in time line should be the same.
+**Impotant:** <br>
+1. You can choose only `-asrc` or `-d` key. <br>
+2. Number of effects and time stamps in time line should be the same. <br>
 
 ### 2. Usage examples
 ##### Mix 3 sound effects with source file
 ```
-java -jar mixtool.jar -src /home/user/source.wav \
+java -jar mixtool.jar -asrc /home/user/source.wav \
 -se /sound_efects/ahem_x.wav \
 /sound_efects/ahem_x.wav \
 /sound_efects/ahem_x.wav \
@@ -30,7 +30,7 @@ java -jar mixtool.jar -src /home/user/source.wav \
 -out /home/ygrigortsevich/Documents/SpilnaSprava/ffmpeg/output/filename.wav
 ```
 *What command do:* <br>
-1. Source file is */home/user/source.wav*<br>
+1. Audio source file is */home/user/source.wav*<br>
 2. Uses three */sound_efects/ahem_x.wav* effect.<br>
 3. Effects applies to 0, 5, 18 seconds. On the fifth second effect repeats.<br>
 4. Mixed file saved in */home/ygrigortsevich/Documents/SpilnaSprava/ffmpeg/output/filename.wav*<br>
@@ -45,7 +45,7 @@ java -jar mixtool.jar -d 60 \
 -out /home/ygrigortsevich/Documents/SpilnaSprava/ffmpeg/output/filename.wav
 ```
 *What command do:*<br>
-1. Create silent file with duration of 60 seconds <br>
+1. Create silent audio file with duration of 60 seconds <br>
 2. Uses three */sound_efects/ahem_x.wav* effect. <br>
 3. Effects applies to 0, 5, 18 seconds. On the fifth second effect repeats. <br>
 4. Mixed file saved in */home/ygrigortsevich/Documents/SpilnaSprava/ffmpeg/output/filename.wav*<br>
