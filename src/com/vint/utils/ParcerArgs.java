@@ -101,7 +101,14 @@ public class ParcerArgs {
                 inputBuilder.setAverageBitrate(value);
             } else if(arg.equals(VBR_KEY)){
                 inputBuilder.setKey(VBR_KEY);
-//                TODO: Add VBR
+                String[] values = getValuesList(i, args);
+                if(values.length >= 2){
+                    inputBuilder.setMinBitrate(values[0]);
+                    inputBuilder.setMaxBitrate(values[1]);
+                } else {
+                    Log.e(Error.MISSED_VALUE + VBR_KEY);
+                    System.exit(0);
+                }
             } else if(arg.equals(CBR_KEY)){
                 inputBuilder.setKey(CBR_KEY);
                 String value = (i + 1 < max)?args[i + 1]: null;
