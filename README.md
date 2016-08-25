@@ -26,6 +26,7 @@
 1. You can choose only `-asrc` or `-d` key. <br>
 2. Number of effects and time stamps in time line should be the same. <br>
 
+---
 #### 1.2 Режим *ONLY VIDEO*
 
 |Key       | Description                                                              | Value            |
