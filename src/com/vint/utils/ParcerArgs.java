@@ -28,6 +28,9 @@ public class ParcerArgs {
     public static final String VIDEO_CODEC_VERBOSE_KEY = "--video-codec";
     public static final String FPS_KEY = "-fps";
 
+//    private static final String DEFAULT_VIDEO_CODEC = "libx264";
+//    private static final String DEFAULT_BITRATE = "libx264";
+
 
     public static final String[] KEYS = new String[] {
             AUDIO_SOURCE_PATH_KEY,

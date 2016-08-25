@@ -11,6 +11,9 @@ import com.vint.utils.Utils;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.UUID;
+
+import static com.vint.utils.ParcerArgs.*;
 
 
 public class Main {
@@ -28,6 +31,14 @@ public class Main {
     private static String[] timeline;
     private static ArrayList<Effect> schedule;
 
+    private static String frameMask;
+    private static String averageBitrate;
+    private static String minBitrate;
+    private static String maxBitrate;
+    private static String constantBitrate;
+    private static String videoCodec;
+    private static int fps;
+
     public static void main(String[] args) throws IOException, InterruptedException {
 //        args = new String[]{
 //            "-asrc",
@@ -44,6 +55,7 @@ public class Main {
 //            "/home/ygrigortsevich/Documents/SpilnaSprava/ffmpeg/output/test1-loop.wav",
 //            "-fm"
 //        };
+
         init(args);
 
         int type = determineType();
@@ -63,8 +75,77 @@ public class Main {
             Log.i("File generated in " + output);
         } else if(type == VIDEO_ONLY){
             Log.d("VIDEO ONLY");
+
+            checkRequiredKeysForVideo();
+
+//            TODO: Refactor. Added this func when parce arg.
+            checkFrameMaskValue();
+            checkFpsValue();
+            checkVideoOutput();
+
+            if(input.isKEY_CBR()){
+                if(constantBitrate == null){
+                    constantBitrate = "200k";
+                    Log.i("Constant bitrate value is empty. Used default value " + constantBitrate);
+                }
+
+                FFmpeg.createVideoFromImagesCBR(frameMask, fps, constantBitrate, output);
+            } else if(input.isKEY_ABR()){
+
+                if(averageBitrate == null){
+                    averageBitrate = "200k";
+                    Log.i("Constant bitrate value is empty. Used default value " + averageBitrate);
+                }
+
+                FFmpeg.createVideoFromImagesABR(frameMask, fps, averageBitrate, output);
+            } else if(input.isKEY_VBR()){
+
+//                TODO: Code this
+
+                FFmpeg.createVideoFromImagesVBR(frameMask, fps, minBitrate, maxBitrate, output);
+            }
+
         } else if (type == VIDEO_WITH_AUDIO){
             Log.d("VIDEO & AUDIO");
+        }
+    }
+
+//    TODO: Refactor.
+    private static void checkVideoOutput() {
+        if (output == null){
+            String fileName = "video"+ UUID.randomUUID().toString();
+            output = System.getProperty("user.dir") + File.separator + fileName + ".mp4";
+        }
+    }
+
+    private static void checkFpsValue() {
+        if(fps <= 0){
+            Log.e("FPS value must be greater than zero");
+            System.exit(0);
+        }
+    }
+
+    private static void checkFrameMaskValue() {
+        if(frameMask == null){
+            Log.e(Error.MISSED_VALUE + FRAME_MASK_KEY);
+            System.exit(0);
+        }
+    }
+
+    private static void checkRequiredKeysForVideo() {
+        if(!input.isKEY_FRAME_MASK()){
+            Log.e(Error.MISSED_KEY + FRAME_MASK_KEY);
+            System.exit(0);
+        }
+        if(!input.isKEY_FPS()){
+            Log.e(Error.MISSED_KEY + FPS_KEY);
+            System.exit(0);
+        }
+
+        if(!input.isKEY_CBR() && !input.isKEY_ABR() && !input.isKEY_VBR()){
+//            TODO: Refactor this msg.
+            Log.e("Bitrate key required. Choose one of this keys: "+ CBR_KEY +" "+ ABR_KEY +" "+ VBR_KEY);
+            System.exit(0);
         }
     }
 
@@ -76,6 +157,14 @@ public class Main {
         output = input.getOutputPath();
         effects = input.getSoundEffects();
         timeline = input.getTimeline();
+
+        frameMask = input.getFrameMask();
+        averageBitrate = input.getAverageBitrate();
+        minBitrate = input.getMinBitrate();
+        maxBitrate = input.getMaxBitrate();
+        constantBitrate = input.getConstantBitrate();
+        videoCodec = input.getVideoCodec();
+        fps = input.getFps();
     }
 
     private static int determineType() {

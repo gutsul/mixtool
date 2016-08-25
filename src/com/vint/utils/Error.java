@@ -10,6 +10,7 @@ public class Error {
     public static final String BAD_TIME_FORMAT = "Bad time format: ";
     public static final String FILE_NOT_EXIST = "File does not exist: ";
     public static final String MISSED_KEY = "Missed key: ";
-    public static final String ONLY_NUMBERS = "Value must contain only numbers and greater than zero: ";
+    public static final String MISSED_VALUE = "Missed value for key: ";
+    public static final String ONLY_NUMBERS = "Value must contain only numbers: ";
 
 }
