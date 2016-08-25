@@ -91,6 +91,10 @@ public class ParcerArgs {
                 if(isKey(value)){
                     value = null;
                 }
+                if(value == null){
+                    Log.e(Error.MISSED_VALUE + FRAME_MASK_KEY);
+                    System.exit(0);
+                }
                 inputBuilder.setFrameMask(value);
             } else if(arg.equals(ABR_KEY)){
                 inputBuilder.setKey(ABR_KEY);
@@ -102,6 +106,7 @@ public class ParcerArgs {
             } else if(arg.equals(VBR_KEY)){
                 inputBuilder.setKey(VBR_KEY);
                 String[] values = getValuesList(i, args);
+
                 if(values.length >= 2){
                     inputBuilder.setMinBitrate(values[0]);
                     inputBuilder.setMaxBitrate(values[1]);

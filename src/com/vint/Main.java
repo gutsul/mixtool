@@ -79,7 +79,6 @@ public class Main {
             checkRequiredKeysForVideo();
 
 //            TODO: Refactor. Added this func when parce arg.
-            checkFrameMaskValue();
             checkFpsValue();
             checkVideoOutput();
 
@@ -121,13 +120,6 @@ public class Main {
     private static void checkFpsValue() {
         if(fps <= 0){
             Log.e("FPS value must be greater than zero");
-            System.exit(0);
-        }
-    }
-
-    private static void checkFrameMaskValue() {
-        if(frameMask == null){
-            Log.e(Error.MISSED_VALUE + FRAME_MASK_KEY);
             System.exit(0);
         }
     }
