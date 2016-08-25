@@ -7,10 +7,10 @@
 
 ### 1. Documentation
 
-Mixtool може працювати в трьох режимах: <br>
- - ONLY AUDIO <br>
- - ONLY VIDEO <br>
- - VIDEO&AUDIO <br>
+**Mixtool** може працювати в трьох режимах: <br>
+* ONLY AUDIO <br>
+- ONLY VIDEO <br>
+- VIDEO&AUDIO <br>
 
 |Key       | Description                                                                 | Value            |
 |:-------- |-----------------------------------------------------------------------------|------------------|
