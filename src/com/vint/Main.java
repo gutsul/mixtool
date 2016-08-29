@@ -25,7 +25,7 @@ public class Main {
 
     private static Input input;
     private static int duration;
-    private static String source;
+    private static String audioSource;
     private static String output;
     private static String[] effects;
     private static String[] timeline;
@@ -70,9 +70,8 @@ public class Main {
 
             schedule = createSchedule();
 
-            FFmpeg.mixSoundEffects(source, schedule, output);
+            FFmpeg.mixSoundEffects(audioSource, schedule, output);
             deleteTmpFiles();
-            Log.i("File generated in " + output);
         } else if(type == VIDEO_ONLY){
             Log.d("VIDEO ONLY");
 
@@ -106,46 +105,56 @@ public class Main {
 
         } else if (type == VIDEO_WITH_AUDIO){
             Log.d("VIDEO & AUDIO");
+
+            checkAudioSource();
+            checkEffects();
+            checkTimeLine();
+            checkRequiredKeysForVideo();
+            checkFpsValue();
+            checkVideoOutput();
+
+            String audio = "audio" + UUID.randomUUID().toString() + ".wav";
+            String video = "video" + UUID.randomUUID().toString() + ".mp4";
+
+            schedule = createSchedule();
+            FFmpeg.mixSoundEffects(audioSource, schedule, audio);
+            deleteTmpFiles();
+
+            if(input.isKEY_CBR()){
+                if(constantBitrate == null){
+                    constantBitrate = "200k";
+                    Log.i("Constant bitrate value is empty. Used default value " + constantBitrate);
+                }
+
+                FFmpeg.createVideoFromImagesCBR(frameMask, fps, constantBitrate, video);
+            } else if(input.isKEY_ABR()){
+
+                if(averageBitrate == null){
+                    averageBitrate = "200k";
+                    Log.i("Constant bitrate value is empty. Used default value " + averageBitrate);
+                }
+
+                FFmpeg.createVideoFromImagesABR(frameMask, fps, averageBitrate, video);
+            } else if(input.isKEY_VBR()){
+//                TODO: Code this
+                FFmpeg.createVideoFromImagesVBR(frameMask, fps, minBitrate, maxBitrate, video);
+            }
+
+            FFmpeg.mergeVideoAndAudio(video, audio, output);
+
+            Utils.deleteExistedFile(video);
+            Utils.deleteExistedFile(audio);
         }
+
+        Log.i("File generated in " + output);
     }
 
-//    TODO: Refactor.
-    private static void checkVideoOutput() {
-        if (output == null){
-            String fileName = "video"+ UUID.randomUUID().toString();
-            output = System.getProperty("user.dir") + File.separator + fileName + ".mp4";
-        }
-    }
-
-    private static void checkFpsValue() {
-        if(fps <= 0){
-            Log.e("FPS value must be greater than zero");
-            System.exit(0);
-        }
-    }
-
-    private static void checkRequiredKeysForVideo() {
-        if(!input.isKEY_FRAME_MASK()){
-            Log.e(Error.MISSED_KEY + FRAME_MASK_KEY);
-            System.exit(0);
-        }
-        if(!input.isKEY_FPS()){
-            Log.e(Error.MISSED_KEY + FPS_KEY);
-            System.exit(0);
-        }
-
-        if(!input.isKEY_CBR() && !input.isKEY_ABR() && !input.isKEY_VBR()){
-//            TODO: Refactor this msg.
-            Log.e("Bitrate key required. Choose one of this keys: "+ CBR_KEY +" "+ ABR_KEY +" "+ VBR_KEY);
-            System.exit(0);
-        }
-    }
 
     private static void init(String[] args) {
         input = ParcerArgs.parse(args);
 
         duration = input.getDuration();
-        source = input.getAudioSourcePath();
+        audioSource = input.getAudioSourcePath();
         output = input.getOutputPath();
         effects = input.getSoundEffects();
         timeline = input.getTimeline();
@@ -190,12 +199,12 @@ public class Main {
     }
 
     private static void checkAudioSource() throws IOException, InterruptedException {
-        if (source != null){
-            checkFileExist(source);
+        if (audioSource != null){
+            checkFileExist(audioSource);
         } else {
             if(duration > 0){
                 FFmpeg.createSilentAudio(duration, SILENT_FILE);
-                source = SILENT_FILE;
+                audioSource = SILENT_FILE;
             } else {
                 Log.e(Error.MISSED_KEY + ParcerArgs.AUDIO_SOURCE_PATH_KEY);
 //                Log.e(Error.ERROR1);
@@ -227,7 +236,7 @@ public class Main {
 
     private static void checkOutput() {
         if (output == null){
-            String fileName = new File(source).getName();
+            String fileName = new File(audioSource).getName();
             output = System.getProperty("user.dir") + File.separator + fileName;
         }
     }
@@ -270,6 +279,38 @@ public class Main {
         File file = new File(filePath);
         if (!file.exists()){
             Log.e(Error.FILE_NOT_EXIST + filePath);
+            System.exit(0);
+        }
+    }
+
+    //    TODO: Refactor.
+    private static void checkVideoOutput() {
+        if (output == null){
+            String fileName = "video"+ UUID.randomUUID().toString();
+            output = System.getProperty("user.dir") + File.separator + fileName + ".mp4";
+        }
+    }
+
+    private static void checkFpsValue() {
+        if(fps <= 0){
+            Log.e("FPS value must be greater than zero");
+            System.exit(0);
+        }
+    }
+
+    private static void checkRequiredKeysForVideo() {
+        if(!input.isKEY_FRAME_MASK()){
+            Log.e(Error.MISSED_KEY + FRAME_MASK_KEY);
+            System.exit(0);
+        }
+        if(!input.isKEY_FPS()){
+            Log.e(Error.MISSED_KEY + FPS_KEY);
+            System.exit(0);
+        }
+
+        if(!input.isKEY_CBR() && !input.isKEY_ABR() && !input.isKEY_VBR()){
+//            TODO: Refactor this msg.
+            Log.e("Bitrate key required. Choose one of this keys: "+ CBR_KEY +" "+ ABR_KEY +" "+ VBR_KEY);
             System.exit(0);
         }
     }
