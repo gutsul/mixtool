@@ -81,8 +81,8 @@ java -jar mixtool \
 ```
 *What command do:*<br>
 1. Video will created from images with mask *frame_%06d.png* that located in folder *create_video*. <br>
-2. Set average bitrate to *1000k*.
-3. Set framerate to 24 frames per second.
+2. Set average bitrate to *1000k*. <br>
+3. Set framerate to 24 frames per second. <br>
 4. Mixed file saved in */SpilnaSprava/mixtool/output/ideaVideoAndAudio.mp4*<br>
 
 #### 1.3 Режим *VIDEO&AUDIO*
@@ -107,9 +107,9 @@ java -jar mixtool \
 2. Uses three effects: *car_x.wav*, *ahem_x.wav*, *applause_y.wav*. <br>
 3. Effects applies to 0, 5, 10 seconds. On the fifth second effect repeats. <br>
 4. Video will created from images with mask *frame_%06d.png* that located in folder *create_video*. <br>
-5. Set average bitrate to *1000k*.
-6. Set framerate to 24 frames per second.
-4. Mixed file saved in */SpilnaSprava/mixtool/output/ideaVideoAndAudio.mp4*<br>
+5. Set average bitrate to *1000k*. <br>
+6. Set framerate to 24 frames per second. <br>
+7. Mixed file saved in */SpilnaSprava/mixtool/output/ideaVideoAndAudio.mp4*<br>
 
 
 
